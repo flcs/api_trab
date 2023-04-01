@@ -1,9 +1,9 @@
-import {Router} from 'express'
-import factoryProduto from './main/factory_produto';
+import { Router } from 'express'
+import { factoryControllerProduto } from './main/factory_Controller_produto';
 
+const controllerProduto = factoryControllerProduto();
 const routes = Router();
-const produtoController = factoryProduto();
-routes.get("/api/produto",produtoController.getProduto)
-routes.post("/api/produto",produtoController.createProduto)
+routes.get("/api/produto", controllerProduto.getProduto.bind(controllerProduto))
+routes.post("/api/produto", controllerProduto.createProduto.bind(controllerProduto))
 
-export {routes};
+export { routes };

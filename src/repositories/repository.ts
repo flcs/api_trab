@@ -1,27 +1,28 @@
 export class Repository<Entidade extends { id: string }>{
-    lista:Entidade[] = [];
 
-    private find(id:string):number{ 
+    lista: Entidade[] = [];
+
+    private find(id: string): number {
         const obj = this.lista.findIndex(item => item.id === id)
         return obj;
     }
 
-    async findById(id:string):Promise<Entidade | undefined>{ 
+    async findById(id: string): Promise<Entidade | undefined> {
         const index = this.find(id);
-        if(index <0 ) return undefined;
+        if (index < 0) return undefined;
         const obj = await this.lista[index]
         return obj;
     }
 
-    async updateById(id:string, atualizacao:Entidade):Promise<boolean>{ 
+    async updateById(id: string, atualizacao: Entidade): Promise<boolean> {
         const index = await this.find(id);
-        if(index <0 ) return false;
+        if (index < 0) return false;
         this.lista[index] = atualizacao;
         return true;
     }
-    
-    async create(novo:Partial<Entidade>):Promise<Entidade>{ 
-        const id= this.lista.length.toString();
+
+    async create(novo: Partial<Entidade>): Promise<Entidade> {
+        const id = (this.lista.length + 1).toString();
         const objeto_novo = {
             ...novo, id
         } as Entidade
@@ -29,12 +30,12 @@ export class Repository<Entidade extends { id: string }>{
         return objeto_novo;
     }
 
-    async deleteById(id: string):Promise<boolean>{ 
+    async deleteById(id: string): Promise<boolean> {
         const index = await this.find(id);
-        if(index <0 ) return false;
-        this.lista.splice(index);
+        if (index < 0) return false;
+        this.lista.splice(index, 1);
         return true;
     }
 
-   
+
 }
